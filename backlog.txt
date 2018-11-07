@@ -1,0 +1,36 @@
+Johan Guerrero -- ✓ ☒ ├ │ └ ─ ┐ ┣ ┗ ┞ ┓ ┃ ━
+
+
+
+Backlog
+ ┃
+ ┣━Visiteur
+ ┃	│
+ ┃	├ je souhaite voir 3 produits en page d’accueil						✓
+ ┃	│
+ ┃	├ je souhaite avoir un menu pour naviguer							✓
+ ┃	│
+ ┃	├ je souhaite avoir un menu faire une recherche						☒
+ ┃	│
+ ┃	├ je souhaite consulter tous les produits							✓
+ ┃	│
+ ┃	├ je souhaite consulter les caractéristiques d’un produit				✓
+ ┃	│
+ ┃	├ je souhaite créer un compte									✓
+ ┃	│
+ ┃	├ je souhaite voir mon panier d’achats							☒
+ ┃	│
+ ┃	└ je souhaite modifier mon panier d’achats						☒
+ ┃
+ ┣━Utilisateur-inscrit
+ ┃	│
+ ┃	└ je souhaite reservé un produit								☒
+ ┃
+ ┗━Administrateur
+ 	│
+ 	├ je souhaite pouvoir ajouter, supprimer les produits					✓
+ 	│	
+ 	├ je souhaite voir toutes les commandes							☒
+ 	│
+ 	└ je souhaite avoir des informations sur les utilisateurs ayant commandé	☒
+ 	
