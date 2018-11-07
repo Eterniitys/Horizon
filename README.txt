@@ -1,15 +1,15 @@
-Johan Guerrero -- ├ │ └ ─ ┐ ┣ ┗ ┞ ┓ ┃ ━
+Johan Guerrero
 
 #############################################################
-#										#
-#			   !!! IMPORTANT !!! 				#
-#										#
+#								#
+#			   !!! IMPORTANT !!! 			#
+#								#
 #############################################################
-#										#
+#								#
 #	Un compte Admin est harcodé dans la base de donnée	#
-#	mail:		admin@admin.fr					#
-#	mdp:		admin							#
-#										#
+#	mail:		admin@admin.fr				#
+#	mdp:		admin					#
+#								#
 #############################################################
 
 template
