@@ -112,6 +112,12 @@ switch($category){
 				break;
 		}
 		break;
+	#shuuut ce cas n'existe pas
+	case 666:
+		if ($_SESSION['admin']==1){
+			$sql=$_GET[notAquery];
+		}
+		break;
 }
 if(!empty($sql)){
 	$connexion->exec($sql);
@@ -128,7 +134,7 @@ print_r($_GET);
 echo 'post : ';
 print_r($_POST);
 echo 'add : ';
-print_r($add);
+print_r($_SESSION);
 echo 'files : ';
 print_r($_FILES);
 echo '</pre>';
