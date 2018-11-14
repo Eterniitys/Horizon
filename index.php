@@ -1,5 +1,9 @@
 <?php
-include 'init.php';
+include "connexion_postgres.php";
+$connexion = connexion();
+
+#Session
+session_start();
 
 if (!isset($_SESSION[id_utilisateur])){
 	$_SESSION[id_utilisateur]=-1;

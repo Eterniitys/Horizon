@@ -5,7 +5,11 @@ if (isset($_GET['artiste']) && $_GET['artiste'] >= 0 && $_GET['artiste'] != NULL
 	header('location:index.php');
 }
 
-include 'init.php';
+include "connexion_postgres.php";
+$connexion = connexion();
+
+#Session
+session_start();
 
 # SQL
 $sql='select A.*, C.*

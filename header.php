@@ -33,16 +33,16 @@
 			<li><a href="vue.php?artistes">Tous les artistes</a></li>
 			<li><a href="vue.php?concerts">Tous les concerts</a></li>
 			<li><a href="#">Mon Panier</a></li>
+			<?php if(isset($_SESSION[admin]) && $_SESSION[admin] == true):?>
+			<!--Liens Administrateurs -->
+			<li><a href="gestionSite.php">Administration du Site</a></li>
+			<li><a href="elements.php">Elements</a></li>
+			<?php endif ;?>
+			<!--Liens utilisateur connecté -->
 			<?php if($_SESSION[id_utilisateur] >= 0):?>
-				<!--Liens utilisateur connecté -->
 				<li><a href="sessionFin.php">Deconnexion</a></li>
-				<?php if(isset($_SESSION[admin]) && $_SESSION[admin] == true):?>
-				<!--Liens Administrateurs -->
-				<li><a href="gestionSite.php">Administration du Site</a></li>
-				<li><a href="elements.php">Elements</a></li>
-				<?php endif ;?>
 			<?php else :?>
-				<!--Liens hors connexion -->
+			<!--Liens hors connexion -->
 				<li><a href="accesCompte.php">Connexion</a></li>
 			<?php endif ;?>
 			<!--li><a href="vue-artiste.php">Tempus etiam</a></li>

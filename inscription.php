@@ -1,5 +1,9 @@
 <?php
-include 'init.php';
+include "connexion_postgres.php";
+$connexion = connexion();
+
+#Session
+session_start();
 
 if (!empty($_POST)){
 	$_SESSION['nom']=htmlspecialchars($_POST['nom']);

@@ -1,5 +1,9 @@
 <?php
-include 'init.php';
+include "connexion_postgres.php";
+$connexion = connexion();
+
+#Session
+session_start();
 
 if(!isset($_SESSION['admin']) && !$_SESSION['admin'] == true){
 	header('location:index.php');			
