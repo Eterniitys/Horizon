@@ -25,9 +25,9 @@ $info=$connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <?php
-echo '<pre>';
-print_r($info);
-echo '</pre>';
+#echo '<pre>';
+#print_r($info);
+#echo '</pre>';
 ?>
 <!DOCTYPE HTML>
 <!--
