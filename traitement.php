@@ -1,7 +1,7 @@
 <?php
 include 'init.php';
 
-if(!isset($_SESSION[admin]) && !$_SESSION[admin] == true){
+if(!isset($_SESSION['admin']) && !$_SESSION['admin'] == true){
 	header('location:index.php');			
 }
 #CONSTANTE chemin image portrait
@@ -10,11 +10,11 @@ $pathImg='images/artistes/';
 $pathBanner='images/banner/';
 
 #variables
-$category=$_GET[category];
-$type=$_GET[type];
+$category=$_GET['category'];
+$type=$_GET['type'];
 
-foreach ($_POST[add] as $k=>$v){
-	$add[$k]=htmlspecialchars($v);
+foreach ($_POST['add'] as $k=>$v){
+	$add['$k']=htmlspecialchars($v);
 }
 
 # SQL
@@ -36,7 +36,7 @@ switch($category){
 				break;
 			#suppression concert
 			case 4:
-				$sql='delete from concerts where id_concert='.$_GET[concert];
+				$sql='delete from concerts where id_concert='.$_GET['concert'];
 				$type=2;
 				break;
 		}
@@ -46,8 +46,8 @@ switch($category){
 		switch($type){
 			#ajout artiste
 			case 2:
-				move_uploaded_file($_FILES[add][tmp_name][0],$pathImg.$add[2]);
-				move_uploaded_file($_FILES[add][tmp_name][1],$pathBanner.$add[2]);
+				move_uploaded_file($_FILES['add']['tmp_name'][0],$pathImg.$add[2]);
+				move_uploaded_file($_FILES['add']['tmp_name'][1],$pathBanner.$add[2]);
 				$sql='insert into artistes(image,nom,genre) values (\''.$add[2].'\',\''.$add[0].'\',\''.$add[1].'\')';
 				break;
 			#modification artiste
@@ -56,26 +56,26 @@ switch($category){
 					rename($pathImg.$add[4],$pathImg.$add[2]);
 					rename($pathBanner.$add[4],$pathBanner.$add[2]);
 				}
-				if ($_FILES[add][error][0]==0){
+				if ($_FILES['add']['error'][0]==0){
 					if (is_readable($pathImg.$add[2])){
 						unlink($pathImg.$add[2]);
 					}
-					move_uploaded_file($_FILES[add][tmp_name][0],$pathImg.$add[2]);
+					move_uploaded_file($_FILES['add']['tmp_name'][0],$pathImg.$add[2]);
 				}
-				if ($_FILES[add][error][1]==0){
+				if ($_FILES['add']['error'][1]==0){
 					if (is_readable($pathBanner.$add[2])){
 						unlink($pathBanner.$add[2]);
 					}
-					move_uploaded_file($_FILES[add][tmp_name][1],$pathBanner.$add[2]);
+					move_uploaded_file($_FILES['add']['tmp_name'][1],$pathBanner.$add[2]);
 				}
 				$sql='update artistes set nom=\''.$add[0].'\',genre=\''.$add[1].'\',image=\''.$add[2].'\' where id_artiste='.$add[3];
 				$type=2;
 				break;
 			#suppression artiste
 			case 4:
-				unlink($pathImg.$_GET[img]);
-				unlink($pathBanner.$_GET[img]);
-				$sql='delete from artistes where id_artiste='.$_GET[artiste];
+				unlink($pathImg.$_GET['img']);
+				unlink($pathBanner.$_GET['img']);
+				$sql='delete from artistes where id_artiste='.$_GET['artiste'];
 				$type=2;
 				break;
 		}
@@ -85,11 +85,11 @@ switch($category){
 		switch($type){
 			#ajout participation
 			case 2:
-				$sql='insert into ensemble_groupe values ('.$_POST[concert].','.$_POST[artiste].')';
+				$sql='insert into ensemble_groupe values ('.$_POST['concert'].','.$_POST['artiste'].')';
 				break;
 			#suppression participation
 			case 4:
-				$sql='delete from ensemble_groupe where id_artiste='.$_GET[artiste].' and id_concert='.$_GET[concert];
+				$sql='delete from ensemble_groupe where id_artiste='.$_GET['artiste'].' and id_concert='.$_GET['concert'];
 				$type=2;
 				break;
 		}
@@ -99,11 +99,11 @@ switch($category){
 		switch($type){
 			#ajout admin
 			case 2:
-				$sql='insert into administrateurs(id_utilisateur) values ('.$_GET[utilisateur].')';
+				$sql='insert into administrateurs(id_utilisateur) values ('.$_GET['utilisateur'].')';
 				break;
 			#suppression admin
 			case 4:
-				$sql='delete from administrateurs where id_utilisateur='.$_GET[utilisateur];
+				$sql='delete from administrateurs where id_utilisateur='.$_GET['utilisateur'];
 				$type=2;
 				break;
 		}

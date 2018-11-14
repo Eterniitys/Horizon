@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET[artiste]) && $_GET[artiste] >= 0 && $_GET[artiste] != NULL){
-	$id_artiste = $_GET[artiste];
+if (isset($_GET['artiste']) && $_GET['artiste'] >= 0 && $_GET['artiste'] != NULL){
+	$id_artiste = $_GET['artiste'];
 }else{
 	header('location:index.php');
 }
@@ -49,8 +49,8 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<span class="image main"><img src="<?='images/banner/'.$info[0][image]?>" alt="" /></span>
-							<h1>En concert avec <?=$info[0][nom]?></h1>
+							<span class="image main"><img src="<?='images/banner/'.$info['0']['image']?>" alt="" /></span>
+							<h1>En concert avec <?=$info['0']['nom']?></h1>
 							<div class="table-wrapper">
 								<table>
 									<thead>
@@ -65,11 +65,11 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 								<tbody>
 								<?php foreach ($info as $i => $tab):?>
 									<tr>
-										<td><a href="vue-concert.php?concert=<?=$tab[id_concert]?>"><?=$tab[lieu]?></a></td>
-										<td><?=$tab[date_evenement]?></td>
-										<td><?=$tab[genre]?></td>
-										<td><?=$tab[place_libre].'/'.$tab[place]?></td>
-										<td><?=$tab[prix]?></td>
+										<td><a href="vue-concert.php?concert=<?=$tab['id_concert']?>"><?=$tab['lieu']?></a></td>
+										<td><?=$tab['date_evenement']?></td>
+										<td><?=$tab['genre']?></td>
+										<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
+										<td><?=$tab['prix']?></td>
 										<td class='bontonAdd'><a href="#" class="button primary small">Ajouter au panier</a></td>
 									</tr>
 								<?php endforeach;?>

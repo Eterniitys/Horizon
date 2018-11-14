@@ -2,8 +2,8 @@
 include 'init.php';
 
 if (!empty($_POST)){
-	$mail=htmlspecialchars($_POST[email]);
-	$mdp=sha1(htmlspecialchars($_POST[mdp]));
+	$mail=htmlspecialchars($_POST['email']);
+	$mdp=sha1(htmlspecialchars($_POST['mdp']));
 # SQL
 	if (empty($mail) && empty($mdp)){
 		#Tous les champs ne sont pas remplis
@@ -11,17 +11,17 @@ if (!empty($_POST)){
 	}else{
 		$sql='select * from utilisateurs where mail=\''.$mail.'\'';
 		$info=$connexion->query($sql)->fetch(PDO::FETCH_ASSOC);
-		if (!empty($info) && $mdp === $info[mdp]){
+		if (!empty($info) && $mdp === $info['mdp']){
 			#Acces validé, je compléte la session
-			$_SESSION[id_utilisateur]=$info[id_utilisateur];
-			$_SESSION[nom]=$info[nom];
-			$_SESSION[prenom]=$info[prenom];
-			$_SESSION[email]=$info[mail];
+			$_SESSION['id_utilisateur']=$info['id_utilisateur'];
+			$_SESSION['nom']=$info['nom'];
+			$_SESSION['prenom']=$info['prenom'];
+			$_SESSION['email']=$info['mail'];
 			#Vérification de la table Admin
-			$sql='select * from administrateurs where id_utilisateur='.$_SESSION[id_utilisateur];
+			$sql='select * from administrateurs where id_utilisateur='.$_SESSION['id_utilisateur'];
 			$info=$connexion->query($sql)->fetch(PDO::FETCH_ASSOC);
 			if(!empty($info)){
-				$_SESSION[admin]=true;
+				$_SESSION['admin']=true;
 			}
 			header('location:index.php');
 		}else{
@@ -68,7 +68,7 @@ if (!empty($_POST)){
 								<form method="post" action="accesCompte.php">
 									<div class="fields">
 										<div class="field">
-											<input type="email" name="email" value="<?=$_SESSION[email]?>" placeholder="Email" />
+											<input type="email" name="email" value="<?=$_SESSION['email']?>" placeholder="Email" />
 										</div>
 										<div class="field half">
 											<input type="password" name="mdp" placeholder="Mot de Passe" />

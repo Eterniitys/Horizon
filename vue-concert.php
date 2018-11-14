@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET[concert]) && $_GET[concert] >= 0 && $_GET[concert] != NULL){
-	$id_concert = $_GET[concert];
+if (isset($_GET['concert']) && $_GET['concert'] >= 0 && $_GET['concert'] != NULL){
+	$id_concert = $_GET['concert'];
 }else{
 	header('location:index.php');
 }
@@ -50,10 +50,10 @@ echo '</pre>';
 					<div id="main">
 						<div class="inner">
 							<span class="image main"><img src="<?='images/banner/concert-musique.png'?>" alt="" /></span>
-							<h1><?=$info[0][lieu]?> le <?=$info[0][date_evenement]?></h1>
+							<h1><?=$info['0']['lieu']?> le <?=$info['0']['date_evenement']?></h1>
 							<a href="#" class="button primary medium">Ajouter au panier</a>
 							<p>
-								<?=$info[0][description]?>
+								<?=$info['0']['description']?>
 							</p>
 							<div class="table-wrapper">
 								<table>
@@ -66,8 +66,8 @@ echo '</pre>';
 								<tbody>
 								<?php foreach ($info as $i => $tab):?>
 									<tr>
-										<td><a href="vue-artiste.php?artiste=<?=$tab[id_artiste]?>"><?=$tab[nom]?></a></td>
-										<td><?=$tab[genre]?></td>
+										<td><a href="vue-artiste.php?artiste=<?=$tab['id_artiste']?>"><?=$tab['nom']?></a></td>
+										<td><?=$tab['genre']?></td>
 									</tr>
 								<?php endforeach;?>
 								</tbody>

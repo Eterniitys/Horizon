@@ -1,7 +1,7 @@
 <?php
 include 'init.php';
 
-if(!isset($_SESSION[admin]) && !$_SESSION[admin] == true){
+if(!isset($_SESSION['admin']) && !$_SESSION['admin'] == true){
 	header('location:index.php');			
 }
 
@@ -12,13 +12,13 @@ $mod=3;
 #CONSTANTE signal suppression
 $suppr=4;
 
-if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && isset($_GET[type])){
-	if (isset($_POST[category]) && isset($_POST[type])){
-		$category = $_POST[category];
-		$type = $_POST[type];
+if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']) && isset($_GET['type'])){
+	if (isset($_POST['category']) && isset($_POST['type'])){
+		$category = $_POST['category'];
+		$type = $_POST['type'];
 	}else{
-		$category = $_GET[category];
-		$type = $_GET[type];
+		$category = $_GET['category'];
+		$type = $_GET['type'];
 	}
 # SQL
 	#selection de la table
@@ -26,13 +26,13 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 		case 1:
 			$sql ='select * from concerts C';
 			if($type==$mod){
-				$sql_[0] ='select * from concerts C where C.id_concert='.$_GET[concert];
+				$sql_[0] ='select * from concerts C where C.id_concert='.$_GET['concert'];
 			}
 			break;
 		case 2:
 			$sql ='select * from artistes A';
 			if($type==$mod){
-				$sql_[0] ='select * from artistes A where A.id_artiste='.$_GET[artiste];
+				$sql_[0] ='select * from artistes A where A.id_artiste='.$_GET['artiste'];
 			}
 			break;
 		case 3:
@@ -133,26 +133,26 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 												<tr>
 												<?php switch($category):
 													case 1: ?>
-													<td><?=$tab[lieu]?></td>
-													<td><?=$tab[date_evenement]?></td>
-													<td><?=$tab[place_libre].'/'.$tab[place]?></td>
-													<td><?=$tab[prix]?></td>
+													<td><?=$tab['lieu']?></td>
+													<td><?=$tab['date_evenement']?></td>
+													<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
+													<td><?=$tab['prix']?></td>
 													<?php break ;
 													case 2: ?>
-													<td><?=$tab[nom]?></td>
-													<td><?=$tab[genre]?></td>
-													<td><?=$tab[image]?></td>
+													<td><?=$tab['nom']?></td>
+													<td><?=$tab['genre']?></td>
+													<td><?=$tab['image']?></td>
 													<?php break ;
 													case 3: ?>
-													<td><?=$tab[lieu]?></td>
-													<td><?=$tab[date_evenement]?></td>
-													<td><?=$tab[nom]?></td>
+													<td><?=$tab['lieu']?></td>
+													<td><?=$tab['date_evenement']?></td>
+													<td><?=$tab['nom']?></td>
 													<?php break ;
 													case 4: ?>
-													<?php if(!empty($tab[id_admin])) :?>
-														<td><?=$tab[nom]?></td>
-														<td><?=$tab[prenom]?></td>
-														<td><?=$tab[mail]?></td>
+													<?php if(!empty($tab['id_admin'])) :?>
+														<td><?=$tab['nom']?></td>
+														<td><?=$tab['prenom']?></td>
+														<td><?=$tab['mail']?></td>
 													<?php endif ;?>
 												<?php endswitch ;?>
 												</tr>
@@ -163,45 +163,45 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 											case 1: ?> <!-- concert -->
 													<?php foreach ($info as $i => $tab):?>
 														<tr>
-															<td><?=$tab[lieu]?></td>
-															<td><?=$tab[date_evenement]?></td>
-															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&concert=<?=$tab[id_concert]?>" class="button small">Modifier concert</a>
-															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&concert=<?=$tab[id_concert]?>" class="button small primary">Supprimer concert</a></td>
+															<td><?=$tab['lieu']?></td>
+															<td><?=$tab['date_evenement']?></td>
+															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&concert=<?=$tab['id_concert']?>" class="button small">Modifier concert</a>
+															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&concert=<?=$tab['id_concert']?>" class="button small primary">Supprimer concert</a></td>
 														</tr>
 													<?php endforeach;?>
 											<?php break ;
 											case 2: ?> <!-- artiste -->
 													<?php foreach ($info as $i => $tab):?>
 														<tr>
-															<td><?=$tab[nom]?></td>
-															<td><?=$tab[genre]?></td>
-															<td><?=$tab[image]?></td>
-															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&artiste=<?=$tab[id_artiste]?>" class="button small">Modifier Artiste</a>
-															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&artiste=<?=$tab[id_artiste]?>&img=<?=$tab[image]?>" class="button small primary">Supprimer Artiste</a></td>
+															<td><?=$tab['nom']?></td>
+															<td><?=$tab['genre']?></td>
+															<td><?=$tab['image']?></td>
+															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&artiste=<?=$tab['id_artiste']?>" class="button small">Modifier Artiste</a>
+															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&artiste=<?=$tab['id_artiste']?>&img=<?=$tab['image']?>" class="button small primary">Supprimer Artiste</a></td>
 														</tr>
 													<?php endforeach;?>
 											<?php break ;
 											case 3: ?>  <!-- participation -->
 												<?php foreach ($info as $i => $tab):?>
 													<tr>
-														<td><?=$tab[lieu]?></td>
-														<td><?=$tab[date_evenement]?></td>
-														<td><?=$tab[nom]?></td>
-														<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&concert=<?=$tab[id_concert]?>&artiste=<?=$tab[id_artiste]?>" class="button small">Supprimmer participation</a></td>
+														<td><?=$tab['lieu']?></td>
+														<td><?=$tab['date_evenement']?></td>
+														<td><?=$tab['nom']?></td>
+														<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&concert=<?=$tab['id_concert']?>&artiste=<?=$tab['id_artiste']?>" class="button small">Supprimmer participation</a></td>
 													</tr>
 												<?php endforeach;?>
 											<?php break ;
 											case 4: ?> <!-- admin -->
 												<?php foreach ($info as $i => $tab):?>
-													<?php if(!empty($tab[id_admin])) :?>
+													<?php if(!empty($tab['id_admin'])) :?>
 														<tr>
-															<td><?=$tab[nom]?></td>
-															<td><?=$tab[prenom]?></td>
-															<td><?=$tab[mail]?></td>
-															<?php if($tab[id_admin]!=1 && $tab[id_utilisateur]!=$_SESSION[id_utilisateur]):?>
-																<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&utilisateur=<?=$tab[id_utilisateur]?>" class="button small">Supprimmer droit d'administrateur</a></td>
+															<td><?=$tab['nom']?></td>
+															<td><?=$tab['prenom']?></td>
+															<td><?=$tab['mail']?></td>
+															<?php if($tab['id_admin']!=1 && $tab['id_utilisateur']!=$_SESSION['id_utilisateur']):?>
+																<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&utilisateur=<?=$tab['id_utilisateur']?>" class="button small">Supprimmer droit d'administrateur</a></td>
 															<?php else:?>
-																<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&utilisateur=<?=$tab[id_utilisateur]?>" class="button small disabled">Supprimmer droit d'administrateur</a></td>
+																<td><a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&utilisateur=<?=$tab['id_utilisateur']?>" class="button small disabled">Supprimmer droit d'administrateur</a></td>
 															<?php endif;?>
 														</tr>
 													<?php endif ;?>
@@ -225,29 +225,29 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 												<div class="fields">
 													<div class="field third">Lieu</div>
 													<div class="field third2">
-														<input type="text" name="add[]" value="<?=$info_[0][0][lieu]?>" placeholder="Lieu" require/>
+														<input type="text" name="add[]" value="<?=$info_['0']['0']['lieu']?>" placeholder="Lieu" require/>
 													</div>
 													<div class="field third">Date</div>
 													<div class="field third2">
-														<input type="date" name="add[]" value="<?=$info_[0][0][date_evenement]?>" placeholder="Lieu" require/>
+														<input type="date" name="add[]" value="<?=$info_['0']['0']['date_evenement']?>" placeholder="Lieu" require/>
 													</div>
 													<div class="field third">Nombre de place total</div>
 													<div class="field third2">
-														<input type="number" name="add[]" value="<?=$info_[0][0][place]?>" placeholder="ex : 1234" require/>
+														<input type="number" name="add[]" value="<?=$info_['0']['0']['place']?>" placeholder="ex : 1234" require/>
 													</div>
 													<?php if($type==$mod):?>
 														<div class="field third">Nombre de place disponible</div>
 														<div class="field third2">
-															<input type="number" name="add[]" value="<?=$info_[0][0][place_libre]?>"/>
+															<input type="number" name="add[]" value="<?=$info_['0']['0']['place_libre']?>"/>
 														</div>
-														<input type="hidden" name="add[]" value="<?=$info_[0][0][id_concert]?>" />
+														<input type="hidden" name="add[]" value="<?=$info_['0']['0']['id_concert']?>" />
 													<?php endif;?>
 													<div class="field third">Prix de l'entrée</div>
 													<div class="field third2">
-														<input type="number" name="add[]" value="<?=$info_[0][0][prix]?>" step='.01' placeholder="ex : 49,50" require/>
+														<input type="number" name="add[]" value="<?=$info_['0']['0']['prix']?>" step='.01' placeholder="ex : 49,50" require/>
 													</div>
 													<div class="field">
-														<textarea name="add[]" placeholder="Entrez une description" rows="6"><?=$info_[0][0][description]?></textarea>
+														<textarea name="add[]" placeholder="Entrez une description" rows="6"><?=$info_['0']['0']['description']?></textarea>
 													</div>
 													<div class="field">
 														<ul class="actions">
@@ -267,15 +267,15 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 												<div class="fields">
 													<div class="field third">Nom</div>
 													<div class="field third2">
-														<input type="text" name="add[]" value="<?=$info_[0][0][nom]?>" placeholder="Nom de l'artiste ou du groupe" require/>
+														<input type="text" name="add[]" value="<?=$info_['0']['0']['nom']?>" placeholder="Nom de l'artiste ou du groupe" require/>
 													</div>
 													<div class="field third">Genre</div>
 													<div class="field third2">
-														<input type="text" name="add[]" value="<?=$info_[0][0][genre]?>" placeholder="ex : Pop, Rock, Pop/Rock, ..." require/>
+														<input type="text" name="add[]" value="<?=$info_['0']['0']['genre']?>" placeholder="ex : Pop, Rock, Pop/Rock, ..." require/>
 													</div>
 													<div class="field third">Nom des images</div>
 													<div class="field third2">
-														<input type="text" name="add[]" value="<?=$info_[0][0][image]?>" placeholder="ex : monImage.png" />
+														<input type="text" name="add[]" value="<?=$info_['0']['0']['image']?>" placeholder="ex : monImage.png" />
 													</div>
 													<div class="field third">Image type "Profile"</div>
 													<div class="field third2">
@@ -286,13 +286,13 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 														<input type="file" name="add[]" value=""/>
 													</div>
 													<?php if($type == $mod):?>
-														<input type="hidden" name="add[]" value="<?=$info_[0][0][id_artiste]?>"/>
-														<input type="hidden" name="add[]" value="<?=$info_[0][0][image]?>"/>
+														<input type="hidden" name="add[]" value="<?=$info_['0']['0']['id_artiste']?>"/>
+														<input type="hidden" name="add[]" value="<?=$info_['0']['0']['image']?>"/>
 														<span class="image" style=width:calc(50%) >
-															<img src="<?='images/artistes/'.$info_[0][0][image]?>" alt=""  style=max-width:calc(100%)>
+															<img src="<?='images/artistes/'.$info_['0']['0']['image']?>" alt=""  style=max-width:calc(100%)>
 														</span>
 														<span class="image" style=width:calc(50%)>
-															<img src="<?='images/banner/'.$info_[0][0][image]?>" alt=""  style=max-width:calc(100%)>
+															<img src="<?='images/banner/'.$info_['0']['0']['image']?>" alt=""  style=max-width:calc(100%)>
 														</span>
 													<?php endif ;?>
 													<div class="field">
@@ -312,14 +312,14 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 										<form method='post' action='traitement.php?category=<?=$category?>&type=<?=$ajout?>' class="col-12">
 											<select name="artiste">
 												<option value="">- L'artiste ... -</option>
-												<?php foreach($info_[0] as $k=>$v) :?>
-													<option value="<?=$v[id_artiste]?>"><?=$v[nom]?></option>
+												<?php foreach($info_['0'] as $k=>$v) :?>
+													<option value="<?=$v['id_artiste']?>"><?=$v['nom']?></option>
 												<?php endforeach ;?>
 											</select>
 											<select name="concert">
 												<option value="">- Sera présent au concerts à ... le ... -</option>
-												<?php foreach($info_[1] as $k=>$v) :?>
-													<option value="<?=$v[id_concert]?>"><?=$v[lieu]?> <strong>le</strong> <?=$v[date_evenement]?></option>
+												<?php foreach($info_['1'] as $k=>$v) :?>
+													<option value="<?=$v['id_concert']?>"><?=$v['lieu']?> <strong>le</strong> <?=$v['date_evenement']?></option>
 												<?php endforeach ;?>
 											</select>
 											<div class="field">
@@ -342,12 +342,12 @@ if(isset($_POST[category]) && isset($_POST[type]) || isset($_GET[category]) && i
 												</thead>
 											<tbody>
 											<?php foreach ($info as $i => $tab):?>
-												<?php if(empty($tab[id_admin])) :?>
+												<?php if(empty($tab['id_admin'])) :?>
 													<tr>
-														<td><?=$tab[nom]?></td>
-														<td><?=$tab[prenom]?></td>
-														<td><?=$tab[mail]?></td>
-														<td><a href="traitement.php?category=<?=$category?>&type=<?=$ajout?>&utilisateur=<?=$tab[id_utilisateur]?>" class="button small">Promouvoir Administrateur</a></td>
+														<td><?=$tab['nom']?></td>
+														<td><?=$tab['prenom']?></td>
+														<td><?=$tab['mail']?></td>
+														<td><a href="traitement.php?category=<?=$category?>&type=<?=$ajout?>&utilisateur=<?=$tab['id_utilisateur']?>" class="button small">Promouvoir Administrateur</a></td>
 													</tr>
 												<?php endif ;?>
 											<?php endforeach;?>

@@ -3,10 +3,10 @@ include 'init.php';
 
 # SQL
 $artistes=false;
-if (isset($_GET[artistes])){
+if (isset($_GET['artistes'])){
 	$sql='select * from artistes A';
 	$artistes=true;
-}else if(isset($_GET[concerts])){
+}else if(isset($_GET['concerts'])){
 	$sql='select * from concerts C';
 }else{
 	header('location:index.php');
@@ -17,9 +17,9 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <?php
-echo '<pre>';
+#echo '<pre>';
 #print_r($info);
-echo '</pre>';
+#echo '</pre>';
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -45,7 +45,7 @@ echo '</pre>';
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<span class="image main"><img src="<?='images/banner/'.$info[0][image]?>" alt="" /></span>
+							<span class="image main"><img src="images/banner/concert-musique.png" alt="" /></span>
 							<?php if (!$artistes):?>
 							<h1>Tous les concerts</h1>
 							<?php else :?>
@@ -72,15 +72,15 @@ echo '</pre>';
 								<?php foreach ($info as $i => $tab):?>
 									<tr>
 										<?php if (!$artistes):?>
-										<td><a href="vue-concert.php?concert=<?=$tab[id_concert]?>"><?=$tab[lieu]?></a></td>
-										<td><?=$tab[date_evenement]?></td>
-										<td><?=$tab[genre]?></td>
-										<td><?=$tab[place_libre].'/'.$tab[place]?></td>
-										<td><?=$tab[prix]?></td>
+										<td><a href="vue-concert.php?concert=<?=$tab['id_concert']?>"><?=$tab['lieu']?></a></td>
+										<td><?=$tab['date_evenement']?></td>
+										<td><?=$tab['genre']?></td>
+										<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
+										<td><?=$tab['prix']?></td>
 										<td class='bontonAdd'><a href="#" class="button primary small">Ajouter au panier</a></td>
 										<?php else :?>
-										<td><a href="vue-artiste.php?artiste=<?=$tab[id_artiste]?>"><?=$tab[nom]?></a></td>
-										<td><?=$tab[genre]?></td>
+										<td><a href="vue-artiste.php?artiste=<?=$tab['id_artiste']?>"><?=$tab['nom']?></a></td>
+										<td><?=$tab['genre']?></td>
 										<?php endif ;?>
 									</tr>
 								<?php endforeach;?>

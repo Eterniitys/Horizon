@@ -2,23 +2,23 @@
 include 'init.php';
 
 if (!empty($_POST)){
-	$_SESSION[nom]=htmlspecialchars($_POST[nom]);
-	$_SESSION[prenom]=htmlspecialchars($_POST[prenom]);
-	$_SESSION[email]=htmlspecialchars($_POST[email]);
+	$_SESSION['nom']=htmlspecialchars($_POST['nom']);
+	$_SESSION['prenom']=htmlspecialchars($_POST['prenom']);
+	$_SESSION['email']=htmlspecialchars($_POST['email']);
 }
 #CONSTANTE
-$pattern= '#^([\w]+\.)*([\w]+)@([\w]+)(\.(com|fr|gf|pf))$#';
+$pattern= '#^(['\w']+\.)*(['\w']+)@(['\w']+)(\.(com|fr|gf|pf))$#';
 
 
 # SQL
-$mdp1 = sha1(htmlspecialchars($_POST[mdp1]));
-$mdp2 = sha1(htmlspecialchars($_POST[mdp2]));
-$nom = $_SESSION[nom];
-$prenom = $_SESSION[prenom];
-$mail = $_SESSION[email];
+$mdp1 = sha1(htmlspecialchars($_POST['mdp1']));
+$mdp2 = sha1(htmlspecialchars($_POST['mdp2']));
+$nom = $_SESSION['nom'];
+$prenom = $_SESSION['prenom'];
+$mail = $_SESSION['email'];
 
 if (!empty($_POST) && $mdp1 === $mdp2){
-	if (empty($nom) || empty($prenom) || empty($mail) || empty($_POST[mdp1])){
+	if (empty($nom) || empty($prenom) || empty($mail) || empty($_POST['mdp1'])){
 		echo "<script>alert(\"Tous les champs ne sont pas remplis\")</script>";
 	}else{
 		$sql1='insert into utilisateurs(nom, prenom, mail, mdp) values (:nom,:prenom,:email,:mdp)';
@@ -29,14 +29,14 @@ if (!empty($_POST) && $mdp1 === $mdp2){
 			$info->execute(array('nom'=>$nom,'prenom'=>$prenom,'email'=>$mail,'mdp'=>$mdp1));
 			echo "<script>alert(\"Inscription réussi\")</script>";
 			$info=$connexion->query($sql2)->fetch(PDO::FETCH_ASSOC);
-			$_SESSION[id_utilisateur]=$info[id_utilisateur];
+			$_SESSION['id_utilisateur']=$info['id_utilisateur'];
 			header('location:index.php');
 		}else{
 			echo "<script>alert(\"Votre adresse email est déjà associé à un compte Horizon ou comporte une erreur.\")</script>";
 		}
 	}
 }else{
-	if (isset($_POST[send])){
+	if (isset($_POST['send'])){
 		echo "<script>alert(\"Mots de passe saisi différent !\")</script>";
 	}
 }
@@ -78,13 +78,13 @@ if (!empty($_POST) && $mdp1 === $mdp2){
 								<form method="post" action="inscription.php">
 									<div class="fields">
 										<div class="field third">
-											<input type="text" name="nom" value="<?=$_SESSION[nom]?>" placeholder="Nom" />
+											<input type="text" name="nom" value="<?=$_SESSION['nom']?>" placeholder="Nom" />
 										</div>
 										<div class="field third">
-											<input type="text" name="prenom" value="<?=$_SESSION[prenom]?>" placeholder="Prénom" />
+											<input type="text" name="prenom" value="<?=$_SESSION['prenom']?>" placeholder="Prénom" />
 										</div>
 										<div class="field half">
-											<input type="email" name="email" value="<?=$_SESSION[email]?>" placeholder="Email" />
+											<input type="email" name="email" value="<?=$_SESSION['email']?>" placeholder="Email" />
 										</div>
 										<div class="field half"></div>
 										<div class="field half">
