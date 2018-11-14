@@ -169,7 +169,7 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 														<tr>
 															<td><?=$tab['lieu']?></td>
 															<td><?=$tab['date_evenement']?></td>
-															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&concert=<?=$tab['id_concert']?>" class="button small">Modifier concert</a>
+															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&concert=<?=$tab['id_concert']?>#mod" class="button small">Modifier concert</a>
 															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&concert=<?=$tab['id_concert']?>" class="button small primary">Supprimer concert</a></td>
 														</tr>
 													<?php endforeach;?>
@@ -180,7 +180,7 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 															<td><?=$tab['nom']?></td>
 															<td><?=$tab['genre']?></td>
 															<td><?=$tab['image']?></td>
-															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&artiste=<?=$tab['id_artiste']?>" class="button small">Modifier Artiste</a>
+															<td><a href="gestionSite.php?category=<?=$category?>&type=<?=$mod?>&artiste=<?=$tab['id_artiste']?>#mod" class="button small">Modifier Artiste</a>
 															<a href="traitement.php?category=<?=$category?>&type=<?=$suppr?>&artiste=<?=$tab['id_artiste']?>&img=<?=$tab['image']?>" class="button small primary">Supprimer Artiste</a></td>
 														</tr>
 													<?php endforeach;?>
@@ -214,7 +214,7 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 									<?php endif;?>
 									</tbody>
 									</table>
-								</div>
+								</div id="mod">
 								<!-- Fin gestion en liste -->
 								<!-- Gestion de la modification/ajout -->
 								<?php if($category!='' && $type!=1) :?>

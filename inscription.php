@@ -11,7 +11,7 @@ if (!empty($_POST)){
 	$_SESSION['email']=htmlspecialchars($_POST['email']);
 }
 #CONSTANTE
-$pattern= '#^(['\w']+\.)*(['\w']+)@(['\w']+)(\.(com|fr|gf|pf))$#';
+$pattern= "#^(['\w']+\.)*(['\w']+)@(['\w']+)(\.(com|fr|gf|pf))$#";
 
 
 # SQL
