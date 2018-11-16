@@ -45,6 +45,19 @@ CREATE TABLE administrateurs (
     id_utilisateur integer NOT NULL unique REFERENCES utilisateurs
 );
 
+CREATE TABLE commande (
+    id_commande serial PRIMARY KEY,
+    id_utilisateur integer NOT NULL REFERENCES utilisateurs,
+	date_commande date default CURRENT_DATE
+);
+
+CREATE TABLE ligne_commande (
+	id_ligne serial PRIMARY KEY,
+    id_commande integer NOT NULL REFERENCES utilisateurs,
+	id_concerts integer not null REFERENCES concerts,
+	nbPlace integer not null
+);
+
 --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
 
 insert into artistes (image, nom, genre) values
@@ -85,9 +98,8 @@ insert into ensemble_groupe (id_concert, id_artiste) values
 	(12, 7);
 	
 insert into utilisateurs(nom,prenom,mail,mdp) values ('Guerrero', 'Johan', 'johan.guerrero394@gmail.com','6bef1da66989960533e9f1a8e34560703ff2d245'),
-		('Diez', 'Marie', 'spel7900@gmail.com','03faefdfdcb86a6ca64fbd0d0f5c1d804dfd6bc4'),
-		('Toto', 'Azerty', 'admin@admin.fr','86f7e437faa5a7fce15d1ddcb9eaeaea377667b8'); -- mdp: 'admin'
+		('Diez', 'Marie', 'spel7900@gmail.com','03faefdfdcb86a6ca64fbd0d0f5c1d804dfd6bc4');
 		
 insert into administrateurs(id_utilisateur) values
 	(1),
-	(3);
+	(2);
