@@ -23,10 +23,16 @@ $sql='select A.*, C.*
 
 $info=$connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
+if(!empty($_POST)){
+	$_SESSION['panier'][$id_concert] = $_POST['qte'];
+	echo "<script>alert('Les places ont été ajoutées au panier')</script>";
+}
+
 ?>
 <?php
 #echo '<pre>';
-#print_r($info);
+#print_r($_SESSION);
+#print_r($_POST);
 #echo '</pre>';
 ?>
 <!DOCTYPE HTML>
@@ -54,10 +60,20 @@ $info=$connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 					<div id="main">
 						<div class="inner">
 							<span class="image main"><img src="<?='images/banner/concert-musique.png'?>" alt="" /></span>
-							<h1><?=$info['0']['lieu']?> le <?=$info['0']['date_evenement']?></h1>
-							<a href="#" class="button primary medium">Ajouter au panier</a>
+							<h1><?=$info[0]['lieu']?> le <?=$info[0]['date_evenement']?></h1>
+							<form action="#" method='post'>
+								<select name='qte' style="width:20%;display:inline-block">
+									<option value='1'><strong>1 place</strong></option>
+									<option value='2'>2 places</option>
+									<option value='3'>3 places</option>
+									<option value='4'>4 places</option>
+									<option value='5'>5 places</option>
+									<option value='6'>6 places</option>
+								</select>
+								<input type="submit" class="button primary medium" value="Ajouter au panier"></input>
+							</form>
 							<p>
-								<?=$info['0']['description']?>
+								<?=$info[0]['description']?>
 							</p>
 							<div class="table-wrapper">
 								<table>

@@ -14,19 +14,30 @@ session_start();
 # SQL
 $sql='select A.*, C.*
 	from
-		artistes A
-		join ensemble_Groupe Eg on Eg.id_artiste = A.id_artiste
-		join concerts C on C.id_concert = Eg.id_concert
+	artistes A
+	join ensemble_Groupe Eg on Eg.id_artiste = A.id_artiste
+	join concerts C on C.id_concert = Eg.id_concert
 	where
-		A.id_artiste = '.$id_artiste;
+	A.id_artiste = '.$id_artiste;
 
 $info=$connexion->query($sql);
 $info=$info->fetchAll(PDO::FETCH_ASSOC);
+## ajout panier
+if (!empty($_GET)){
+	foreach ($_GET as $k=>$v){
+		$$k = htmlspecialchars($v);
+	}
+	if (isset($concert) && isset($place)){
+		$_SESSION['panier'][$concert] += $place;
+		echo "<script>alert('Les places ont été ajoutées au panier')</script>";
+	}
+}
 
 ?>
 <?php
 #echo '<pre>';
-#print_r($info);
+#print_r($_SESSION);
+#print_r($_GET);
 #echo '</pre>';
 ?>
 <!DOCTYPE HTML>
@@ -64,6 +75,7 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 											<th>Genre</th>
 											<th>Places restante</th>
 											<th>Prix</th>
+											<th>Panier</th>
 										</tr>
 									</thead>
 								<tbody>
@@ -74,7 +86,10 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 										<td><?=$tab['genre']?></td>
 										<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
 										<td><?=$tab['prix']?></td>
-										<td class='bontonAdd'><a href="#" class="button primary small">Ajouter au panier</a></td>
+										<td>
+											<a href="?artiste=<?=$id_artiste?>&concert=<?=$tab['id_concert']?>&place=+1" class="button primary small">+1 place</a>
+											<a href="?artiste=<?=$id_artiste?>&concert=<?=$tab['id_concert']?>&place=+2" class="button small">+2 places</a>
+										</td>
 									</tr>
 								<?php endforeach;?>
 								</tbody>
@@ -84,9 +99,7 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 					</div>
 				<!-- Footer -->
 					<?php require 'footer.php'; ?>
-
 			</div>
-
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
@@ -96,3 +109,4 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 
 	</body>
 </html>
+
