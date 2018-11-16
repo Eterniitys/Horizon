@@ -4,7 +4,9 @@ $connexion = connexion();
 
 #Session
 session_start();
-
+foreach ($_GET as $k=>$v){
+	$$k = htmlspecialchars($v);
+}
 # SQL
 $artistes=false;
 if (isset($_GET['artistes'])){
@@ -18,12 +20,19 @@ if (isset($_GET['artistes'])){
 
 $info=$connexion->query($sql);
 $info=$info->fetchAll(PDO::FETCH_ASSOC);
+## ajout panier
+if (isset($concerts) && isset($place)){
+	$_SESSION['panier'][$concerts] += $place;
+	echo "<script>alert('Les places ont été ajoutées au panier')</script>";
+}
+
 
 ?>
 <?php
-#echo '<pre>';
-#print_r($info);
-#echo '</pre>';
+echo '<pre>';
+print_r($_GET);
+print_r($_SESSION);
+echo '</pre>';
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -81,7 +90,10 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 										<td><?=$tab['genre']?></td>
 										<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
 										<td><?=$tab['prix']?></td>
-										<td class='bontonAdd'><a href="#" class="button primary small">Ajouter au panier</a></td>
+										<td>
+											<a href="vue.php?concerts=<?=$tab['id_concert']?>&place=+1" class="button primary small">+1 place</a>
+											<a href="vue.php?concerts=<?=$tab['id_concert']?>&place=+2" class="button small">+2 places</a>
+										</td>
 										<?php else :?>
 										<td><a href="vue-artiste.php?artiste=<?=$tab['id_artiste']?>"><?=$tab['nom']?></a></td>
 										<td><?=$tab['genre']?></td>
