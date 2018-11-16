@@ -32,7 +32,7 @@
 			<li><a href="index.php" class="icon fa-home"> Home</a></li>
 			<li><a href="vue.php?artistes" class="icon fa-user"> Tous les artistes</a></li>
 			<li><a href="vue.php?concerts" class="icon fa-users"> Tous les concerts</a></li>
-			<li><a href="#" class="icon fa-shopping-cart"> Mon Panier</a></li>
+			<li><a href="panier.php" class="icon fa-shopping-cart"> Mon Panier</a></li>
 			<?php if(isset($_SESSION[admin]) && $_SESSION[admin] == true):?>
 			<!--Liens Administrateurs -->
 			<li><a href="gestionSite.php" class="icon fa-cog"> Administration du Site</a></li>

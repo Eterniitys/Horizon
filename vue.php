@@ -29,10 +29,10 @@ if (isset($concerts) && isset($place)){
 
 ?>
 <?php
-echo '<pre>';
-print_r($_GET);
-print_r($_SESSION);
-echo '</pre>';
+#echo '<pre>';
+#print_r($_GET);
+#print_r($_SESSION);
+#echo '</pre>';
 ?>
 <!DOCTYPE HTML>
 <!--
