@@ -1,8 +1,10 @@
 <?php
+require "utils.php";
+
 if (isset($_GET['artiste']) && $_GET['artiste'] >= 0 && $_GET['artiste'] != NULL){
 	$id_artiste = $_GET['artiste'];
 }else{
-	header('location:index.php');
+	redirect('index.php');
 }
 
 include "connexion_postgres.php";
@@ -18,10 +20,23 @@ $sql='select A.*, C.*
 	join ensemble_Groupe Eg on Eg.id_artiste = A.id_artiste
 	join concerts C on C.id_concert = Eg.id_concert
 	where
-	A.id_artiste = '.$id_artiste;
+	A.id_artiste = :id';
+$info=$connexion->prepare($sql);
 
-$info=$connexion->query($sql);
-$info=$info->fetchAll(PDO::FETCH_ASSOC);
+if ($info->execute(array('id'=>$id_artiste))){
+	$info=$info->fetchAll(PDO::FETCH_ASSOC);
+}else{
+	redirect("vue.php?artistes");
+}
+
+
+#redirect('vue.php?artiste');
+	
+	
+
+	
+
+
 ## ajout panier
 if (!empty($_GET)){
 	foreach ($_GET as $k=>$v){

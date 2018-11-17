@@ -1,15 +1,15 @@
 <?php
+require 'utils.php';
 if (isset($_GET['concert']) && $_GET['concert'] >= 0 && $_GET['concert'] != NULL){
 	$id_concert = $_GET['concert'];
 }else{
 	header('location:index.php');
 }
 
-include "connexion_postgres.php";
-$connexion = connexion();
+$connexion = dbConnexion();
 
 #Session
-session_start();
+start_session_once();
 
 # SQL
 $sql='select A.*, C.*
@@ -18,22 +18,26 @@ $sql='select A.*, C.*
 		full join ensemble_Groupe Eg on Eg.id_artiste = A.id_artiste
 		full join concerts C on C.id_concert = Eg.id_concert
 	where
-		C.id_concert = '.$id_concert.'
+		C.id_concert = :id
 	--order by random()  limit 6';
+	
+$info=$connexion->prepare($sql);
 
-$info=$connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+if ($info->execute(array('id'=>$id_concert))){
+	$info=$info->fetchAll(PDO::FETCH_ASSOC);
+}else{
+	redirect("vue.php?concerts");
+}
 
 if(!empty($_POST)){
 	$_SESSION['panier'][$id_concert] = $_POST['qte'];
-	echo "<script>alert('Les places ont été ajoutées au panier')</script>";
+	message('Les places ont été ajoutées au panier');
 }
 
 ?>
 <?php
-#echo '<pre>';
-#print_r($_SESSION);
-#print_r($_POST);
-#echo '</pre>';
+#preTab($_SESSION);
+#preTab($_POST);
 ?>
 <!DOCTYPE HTML>
 <!--

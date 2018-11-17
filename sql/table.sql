@@ -7,8 +7,8 @@ drop table if exists utilisateurs;
 drop domain if exists adresseMail;
 
 CREATE DOMAIN adresseMail
-	AS varchar(50) check (value ~ '^([\w]+\.)*([\w]+)@([\w]+)(\.(com|fr|gf|pf))$');
-
+	AS varchar(50) check (value ~ '^([\w]+\.)*([\w]+)@([\w]+)(\.(com|fr|gf|pf|info))$');
+	
 CREATE TABLE artistes (
     id_artiste serial NOT NULL PRIMARY KEY,
     image varchar(60),
@@ -53,7 +53,7 @@ CREATE TABLE commande (
 
 CREATE TABLE ligne_commande (
 	id_ligne serial PRIMARY KEY,
-    id_commande integer NOT NULL REFERENCES utilisateurs,
+    id_commande integer NOT NULL REFERENCES commande,
 	id_concerts integer not null REFERENCES concerts,
 	nbPlace integer not null
 );

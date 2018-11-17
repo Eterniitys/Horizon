@@ -4,8 +4,8 @@
 
 			<!-- Logo -->
 				<a href="index.php" class="logo">
-				<?php if($_SESSION[id_utilisateur] >= 0):?>
-					<span class="symbol"><img src="images/logo.png" alt="" /></span><span class="title">Horizon - <?= $_SESSION[nom]?> <?= $_SESSION[prenom]?></span>
+				<?php if($_SESSION['id_utilisateur'] >= 0):?>
+					<span class="symbol"><img src="images/logo.png" alt="" /></span><span class="title">Horizon - <?= $_SESSION['nom']?> <?= $_SESSION['prenom']?></span>
 				<?php else :?>
 					<span class="symbol"><img src="images/logo.png" alt="" /></span><span class="title">Horizon</span>
 				<?php endif ;?>
@@ -23,7 +23,7 @@
 
 <!-- Menu -->
 	<nav id="menu">
-		<?php if(isset($_SESSION[admin]) && $_SESSION[admin] == true):?>
+		<?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == true):?>
 		<h2>Menu - Admin</h2>
 		<?php else :?>
 		<h2>Menu</h2>
@@ -33,13 +33,13 @@
 			<li><a href="vue.php?artistes" class="icon fa-user"> Tous les artistes</a></li>
 			<li><a href="vue.php?concerts" class="icon fa-users"> Tous les concerts</a></li>
 			<li><a href="panier.php" class="icon fa-shopping-cart"> Mon Panier</a></li>
-			<?php if(isset($_SESSION[admin]) && $_SESSION[admin] == true):?>
+			<?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == true):?>
 			<!--Liens Administrateurs -->
 			<li><a href="gestionSite.php" class="icon fa-cog"> Administration du Site</a></li>
 			<li><a href="elements.php" class="icon fa-lock"> Elements</a></li>
 			<?php endif ;?>
 			<!--Liens utilisateur connecté -->
-			<?php if($_SESSION[id_utilisateur] >= 0):?>
+			<?php if($_SESSION['id_utilisateur'] >= 0):?>
 				<li><a href="sessionFin.php" class="icon fa-toggle-on"> Deconnexion</a></li>
 			<?php else :?>
 			<!--Liens hors connexion -->

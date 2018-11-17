@@ -229,29 +229,29 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 												<div class="fields">
 													<div class="field third">Lieu</div>
 													<div class="field third2">
-														<input type="text" name="add[]" value="<?=$info_['0']['0']['lieu']?>" placeholder="Lieu" require/>
+														<input type="text" name="add[]" value="<?=$info_[0][0]['lieu']?>" placeholder="Lieu" require/>
 													</div>
 													<div class="field third">Date</div>
 													<div class="field third2">
-														<input type="date" name="add[]" value="<?=$info_['0']['0']['date_evenement']?>" placeholder="Lieu" require/>
+														<input type="date" name="add[]" value="<?=$info_[0][0]['date_evenement']?>" placeholder="Lieu" require/>
 													</div>
 													<div class="field third">Nombre de place total</div>
 													<div class="field third2">
-														<input type="number" name="add[]" value="<?=$info_['0']['0']['place']?>" placeholder="ex : 1234" require/>
+														<input type="number" name="add[]" value="<?=$info_[0][0]['place']?>" placeholder="ex : 1234" require/>
 													</div>
 													<?php if($type==$mod):?>
 														<div class="field third">Nombre de place disponible</div>
 														<div class="field third2">
-															<input type="number" name="add[]" value="<?=$info_['0']['0']['place_libre']?>"/>
+															<input type="number" name="add[]" value="<?=$info_[0][0]['place_libre']?>"/>
 														</div>
-														<input type="hidden" name="add[]" value="<?=$info_['0']['0']['id_concert']?>" />
+														<input type="hidden" name="add[]" value="<?=$info_[0][0]['id_concert']?>" />
 													<?php endif;?>
 													<div class="field third">Prix de l'entrée</div>
 													<div class="field third2">
-														<input type="number" name="add[]" value="<?=$info_['0']['0']['prix']?>" step='.01' placeholder="ex : 49,50" require/>
+														<input type="number" name="add[]" value="<?=$info_[0][0]['prix']?>" step='.01' placeholder="ex : 49,50" require/>
 													</div>
 													<div class="field">
-														<textarea name="add[]" placeholder="Entrez une description" rows="6"><?=$info_['0']['0']['description']?></textarea>
+														<textarea name="add[]" placeholder="Entrez une description" rows="6"><?=$info_[0][0]['description']?></textarea>
 													</div>
 													<div class="field">
 														<ul class="actions">
