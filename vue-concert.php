@@ -1,4 +1,7 @@
 <?php
+require "app/concert.php";
+use app\Concert;
+
 require 'utils.php';
 if (isset($_GET['concert']) && $_GET['concert'] >= 0 && $_GET['concert'] != NULL){
 	$id_concert = $_GET['concert'];
@@ -25,18 +28,21 @@ $info=$connexion->prepare($sql);
 
 if ($info->execute(array('id'=>$id_concert))){
 	$info=$info->fetchAll(PDO::FETCH_ASSOC);
+	$concert=Concert::getDBconcert($id_concert);
 }else{
 	redirect("vue.php?concerts");
 }
 
 if(!empty($_POST)){
-	$_SESSION['panier'][$id_concert] = $_POST['qte'];
+	$_SESSION['panier'][$id_concert] += $_POST['qte'];
+	$concert->modFrPl(-$_POST['qte']);
+	$concert->update();
 	message('Les places ont été ajoutées au panier');
 }
 
 ?>
 <?php
-#preTab($_SESSION);
+#preTab($concert);
 #preTab($_POST);
 ?>
 <!DOCTYPE HTML>
@@ -64,20 +70,30 @@ if(!empty($_POST)){
 					<div id="main">
 						<div class="inner">
 							<span class="image main"><img src="<?='images/banner/concert-musique.png'?>" alt="" /></span>
-							<h1><?=$info[0]['lieu']?> le <?=$info[0]['date_evenement']?></h1>
+							<h1><?=$concert->getLieu()?> le <?=$concert->getDate_evenement()?></h1>
 							<form action="#" method='post'>
 								<select name='qte' style="width:20%;display:inline-block">
-									<option value='1'><strong>1 place</strong></option>
+									<?php if($concert->getPlace_libre()>=1):?>
+									<option value='1'>1 place</option>
+									<?php endif ; if($concert->getPlace_libre()>=2):?>
 									<option value='2'>2 places</option>
+									<?php endif ; if($concert->getPlace_libre()>=3):?>
 									<option value='3'>3 places</option>
+									<?php endif ; if($concert->getPlace_libre()>=4):?>
 									<option value='4'>4 places</option>
+									<?php endif ; if($concert->getPlace_libre()>=5):?>
 									<option value='5'>5 places</option>
+									<?php endif ; if($concert->getPlace_libre()>=6):?>
 									<option value='6'>6 places</option>
+									<?php endif ;?>
 								</select>
 								<input type="submit" class="button primary medium" value="Ajouter au panier"></input>
 							</form>
 							<p>
-								<?=$info[0]['description']?>
+								Encore <strong><?=$concert->getPlace_libre()?></strong> places disponibles
+							</p>
+							<p>
+								<?=$concert->getDescription()?>
 							</p>
 							<div class="table-wrapper">
 								<table>

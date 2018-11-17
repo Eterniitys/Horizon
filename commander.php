@@ -1,5 +1,7 @@
 <?php
 include "utils.php";
+require "app/concert.php";
+use app\Concert;
 $connexion = dbConnexion();
 
 #Session
@@ -12,8 +14,12 @@ if (isset($_POST['ctn'])){
 	$cmd=$connexion->prepare("insert into commande(id_utilisateur) values (:id)");
 	$cmd->execute(array('id'=>$_SESSION['id_utilisateur']));
 	$l_cmd=$connexion->prepare("insert into ligne_commande(id_commande,id_concerts,nbplace) values ((select max(id_commande) from commande where id_utilisateur=:id ),:id_c,:nb);");
+	
 	foreach($panier as $k=>$v){
 		$l_cmd->execute(array('id'=>$_SESSION['id_utilisateur'],'id_c'=>$k,'nb'=>$v));
+		$concert = app\Concert::getDBconcert($k);
+		$concert->setPlace_libre($concert->getPlace_libre()-$v);
+		$concert->update();
 	}
 	unset($_SESSION['panier']);
 	message("Votre commande à bien été prise en compte");
@@ -23,6 +29,7 @@ if (isset($_POST['ctn'])){
 if (empty($panier)){
 	redirect('index.php');
 }
+#echo 'info : '; preTab($concert);
 #echo 'session : '; preTab($_SESSION);
 #echo 'panier : '; preTab($panier);
 #echo 'post : '; preTab($_POST);

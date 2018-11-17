@@ -1,5 +1,7 @@
 <?php
 include "utils.php";
+require "app/concert.php";
+use app\Concert;
 $connexion = dbConnexion();
 
 #Session
@@ -7,26 +9,25 @@ start_session_once();
 
 # pour supprimer du panier
 if (!empty($_POST)){
+	$tmp = app\Concert::getDBconcert($_POST['panier_spr']);
+	$tmp->modFrPl($_SESSION['panier'][$_POST['panier_spr']]);
+	$tmp->update();
 	unset($_SESSION['panier'][$_POST['panier_spr']]);
+	unset($tmp);
 }
 
 $sql="select * from concerts where id_concert = -1";
 foreach ($_SESSION['panier'] as $k=>$v){
-	$panier[$k] = $v;
-	$sql.="or id_concert=".$k;
+	$panier[$k] = app\Concert::getDBconcert($k);
 }
-$info = $connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 $tot=0; #cout total
-foreach ($info as $k=>$v){
-	if (isset($panier[$v['id_concert']])){
-		$info[$k]['qte_reserv'] = $panier[$v['id_concert']];
-		$tot += $info[$k]['qte_reserv']*$v['prix'];
-	}
+foreach ($_SESSION['panier'] as $k=>$v){
+	$tot += $panier[$k]->getPrix()*$v;
 }
 
-
-#preTab($_SESSION);
-#preTab($_POST);
+preTab($tmp);
+preTab($panier);
+preTab($_SESSION);
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -68,13 +69,13 @@ foreach ($info as $k=>$v){
 											</tr>
 										</thead>
 									<tbody>
-									<?php foreach ($info as $i => $tab):?>
+									<?php foreach ($panier as $i => $tab):?>
 										<tr>
-											<td><a href="vue-concert.php?concert=<?=$tab['id_concert']?>"><?=$tab['lieu']?></a></td>
-											<td><?=$tab['date_evenement']?></td>
-											<td><?=$tab['qte_reserv']?></td>
-											<td><?=$tab['prix']?> €</td>
-											<td><?=$tab['prix']*$tab['qte_reserv']?> €</td>
+											<td><a href="vue-concert.php?concert=<?=$i?>"><?=$tab->getLieu()?></a></td>
+											<td><?=$tab->getDate_evenement()?></td>
+											<td><?=$_SESSION['panier'][$i]?></td>
+											<td><?=$tab->getPrix()?> €</td>
+											<td><?=$tab->getPrix()*$_SESSION['panier'][$i]?> €</td>
 										</tr>
 									<?php endforeach;?>
 									</tbody>
@@ -103,15 +104,15 @@ foreach ($info as $k=>$v){
 								<form method='post' action="panier.php" class="fields">
 									<select name="panier_spr">
 										<option value="">- Concert -</option>
-										<?php foreach($info as $concert=>$descrip):?>
-											<option value="<?=$descrip['id_concert']?>"><?=$descrip['lieu']?> le <?=$descrip['date_evenement']?> - <?=$descrip['qte_reserv']?> places</option>
+										<?php foreach($panier as $concert=>$descrip):?>
+											<option value="<?=$concert?>"><?=$descrip->getLieu()?> le <?=$descrip->getDate_evenement()?> - <?=$_SESSION['panier'][$concert]?> places</option>
 										<?php endforeach;?>
 									</select>
 									<input type="submit" value="supprimer du panier" class="fit small"></input>
 								</form>
 							<?php else :?>
 							<!-- Si panier vide -->
-							<p style="text-align: center;"><strong>Panier vide</strong></p>
+							<p style="text-align: center;"><strong>Hooo non ! Votre Panier est vide !</strong></p>
 							<p class="icon fa-spin fa-5x fa-circle-o-notch" style="text-align: center;"></p>
 							<?php endif ;?>
 						</div>

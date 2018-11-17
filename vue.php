@@ -1,6 +1,8 @@
 <?php
-include "connexion_postgres.php";
-$connexion = connexion();
+include "utils.php";
+require "app/concert.php";
+use app\Concert;
+$connexion = dbConnexion();
 
 #Session
 session_start();
@@ -13,26 +15,35 @@ if (isset($_GET['artistes'])){
 	$sql='select * from artistes A';
 	$artistes=true;
 }else if(isset($_GET['concerts'])){
-	$sql='select * from concerts C';
+	$sql='select * from concerts C order by date_evenement';
 }else{
 	header('location:index.php');
 }
 
 $info=$connexion->query($sql);
 $info=$info->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($concerts)){
+	foreach($info as $k=>$v){
+		$data[$v['id_concert']] = new app\Concert($v);
+	}
+	//TODO classe artiste
+	$info = $data;
+}
 ## ajout panier
 if (isset($concerts) && isset($place)){
 	$_SESSION['panier'][$concerts] += $place;
+	$data[$concerts]->modFrPl(-$place);
+	$data[$concerts]->update();
 	echo "<script>alert('Les places ont été ajoutées au panier')</script>";
 }
 
 
 ?>
 <?php
-#echo '<pre>';
-#print_r($_GET);
-#print_r($_SESSION);
-#echo '</pre>';
+#echo 'data :<br>'; preTab($data);
+#echo 'info :<br>'; preTab($info[1]);
+#echo 'info :<br>'; preTab($_SESSION);
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -72,7 +83,6 @@ if (isset($concerts) && isset($place)){
 											<?php if (!$artistes):?>
 											<th>Localisation</th>
 											<th>Date</th>
-											<th>Genre</th>
 											<th>Places restante</th>
 											<th>Prix</th>
 											<?php else :?>
@@ -85,16 +95,20 @@ if (isset($concerts) && isset($place)){
 								<?php foreach ($info as $i => $tab):?>
 									<tr>
 										<?php if (!$artistes):?>
-										<td><a href="vue-concert.php?concert=<?=$tab['id_concert']?>"><?=$tab['lieu']?></a></td>
-										<td><?=$tab['date_evenement']?></td>
-										<td><?=$tab['genre']?></td>
-										<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
-										<td><?=$tab['prix']?></td>
+										<!-- si c'est les concerts -->
+										<td><a href="vue-concert.php?concert=<?=$i?>"><?=$tab->getLieu()?></a></td>
+										<td><?=$tab->getDate_evenement()?></td>
+										<td><?=$tab->getPlace_libre().'/'.$tab->getPlace()?></td>
+										<td><?=$tab->getPrix()?></td>
 										<td>
-											<a href="vue.php?concerts=<?=$tab['id_concert']?>&place=+1" class="button primary small">+1 place</a>
-											<a href="vue.php?concerts=<?=$tab['id_concert']?>&place=+2" class="button small">+2 places</a>
+											<?php if($tab->getPlace_libre()>=1):?>
+											<a href="vue.php?concerts=<?=$i?>&place=+1" class="button primary small">+1 place</a>
+											<?php endif; if($tab->getPlace_libre()>=2):?>
+											<a href="vue.php?concerts=<?=$i?>&place=+2" class="button small">+2 places</a>
+											<?php endif ;?>
 										</td>
 										<?php else :?>
+										<!-- si c'est les artistes -->
 										<td><a href="vue-artiste.php?artiste=<?=$tab['id_artiste']?>"><?=$tab['nom']?></a></td>
 										<td><?=$tab['genre']?></td>
 										<?php endif ;?>
