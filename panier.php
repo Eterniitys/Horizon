@@ -25,9 +25,9 @@ foreach ($_SESSION['panier'] as $k=>$v){
 	$tot += $panier[$k]->getPrix()*$v;
 }
 
-preTab($tmp);
-preTab($panier);
-preTab($_SESSION);
+#preTab($tmp);
+#preTab($panier);
+#preTab($_SESSION);
 ?>
 <!DOCTYPE HTML>
 <!--

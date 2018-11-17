@@ -6,7 +6,7 @@ use app\Concert;
 $connexion = dbConnexion();
 
 $id_artiste = $_GET['artiste'];
-
+echo "$id_artiste-";
 #Session
 session_start();
 
@@ -26,7 +26,7 @@ if ($info->execute(array('id'=>$id_artiste))){
 }else{
 	#redirect("vue.php?artistes");
 }
-
+echo "$id_artiste-";
 
 ## ajout panier
 foreach($info as $k=>$v){
@@ -40,7 +40,7 @@ if (!empty($_GET)){
 		$$k = htmlspecialchars($v);
 	}
 	if (isset($concerts) && isset($place)){
-		$_SESSION['panier'][$concert] += $place;
+		$_SESSION['panier'][$concerts] += $place;
 		$data[$concerts]->modFrPl(-$place);
 		$data[$concerts]->update();
 		message('Les places ont été ajoutées au panier');
