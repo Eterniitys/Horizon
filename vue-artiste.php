@@ -6,7 +6,6 @@ use app\Concert;
 $connexion = dbConnexion();
 
 $id_artiste = $_GET['artiste'];
-echo "$id_artiste-";
 #Session
 session_start();
 
@@ -24,27 +23,17 @@ $info=$connexion->prepare($sql);
 if ($info->execute(array('id'=>$id_artiste))){
 	$info=$info->fetchAll(PDO::FETCH_ASSOC);
 }else{
-	#redirect("vue.php?artistes");
+	redirect("vue.php?artistes");
 }
-echo "$id_artiste-";
 
 ## ajout panier
 foreach($info as $k=>$v){
 	$data[$v['id_concert']] = new app\Concert($v);
 }
-//TODO classe artiste
-//$info = $data;
 
 if (!empty($_GET)){
 	foreach ($_GET as $k=>$v){
 		$$k = htmlspecialchars($v);
-	}
-	if (isset($concerts) && isset($place)){
-		$_SESSION['panier'][$concerts] += $place;
-		$data[$concerts]->modFrPl(-$place);
-		$data[$concerts]->update();
-		message('Les places ont été ajoutées au panier');
-		redirect('vue-artiste.php?artiste='.$id_artiste);
 	}
 }
 
@@ -100,9 +89,9 @@ if (!empty($_GET)){
 										<td><?=$tab->getPrix()?></td>
 										<td>
 											<?php if($tab->getPlace_libre()>=1):?>
-											<a href="vue-artiste.php?artiste=<?=$id_artiste?>&concerts=<?=$i?>&place=+1" class="button primary small">+1 place</a>
-											<?php endif; if($tab->getPlace_libre()>=2):?>
-											<a href="vue-artiste.php?artiste=<?=$id_artiste?>&concerts=<?=$i?>&place=+2" class="button small">+2 places</a>
+											<a href="vue-concert.php?concert=<?=$i?>" class="button primary small">Réserver</a>
+											<?php else :?>
+											<a href="" class="button small disabled">Victime de son succés</a>
 											<?php endif ;?>
 										</td>
 									</tr>

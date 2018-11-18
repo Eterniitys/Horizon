@@ -45,5 +45,14 @@ if (!defined('_UTILS_')){
 	function message($message){
 		echo "<script>alert('$message')</script>" ;
 	}
+	
+	function dateFr($date=-1){
+		setlocale(LC_TIME, 'fr_FR.utf8','fra');
+		if ($date == -1){
+			$date=time();
+			return strftime("%d %B %Y",strtotime(date('d M Y',$date)));
+		}
+		return strftime("%d %B %Y",strtotime($date));
+	}
 }
 ?>

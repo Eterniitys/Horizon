@@ -70,7 +70,7 @@ if(!empty($_POST)){
 					<div id="main">
 						<div class="inner">
 							<span class="image main"><img src="<?='images/banner/concert-musique.png'?>" alt="" /></span>
-							<h1><?=$concert->getLieu()?> le <?=$concert->getDate_evenement()?></h1>
+							<h1><?=$concert->getLieu()?> le <?=dateFr($concert->getDate_evenement())?></h1>
 							<form action="#" method='post'>
 								<select name='qte' style="width:20%;display:inline-block">
 									<?php if($concert->getPlace_libre()>=1):?>

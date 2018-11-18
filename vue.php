@@ -30,13 +30,6 @@ if (isset($concerts)){
 	//TODO classe artiste
 	$info = $data;
 }
-## ajout panier
-if (isset($concerts) && isset($place)){
-	$_SESSION['panier'][$concerts] += $place;
-	$data[$concerts]->modFrPl(-$place);
-	$data[$concerts]->update();
-	echo "<script>alert('Les places ont été ajoutées au panier')</script>";
-}
 
 
 ?>
@@ -102,9 +95,9 @@ if (isset($concerts) && isset($place)){
 										<td><?=$tab->getPrix()?></td>
 										<td>
 											<?php if($tab->getPlace_libre()>=1):?>
-											<a href="vue.php?concerts=<?=$i?>&place=+1" class="button primary small">+1 place</a>
-											<?php endif; if($tab->getPlace_libre()>=2):?>
-											<a href="vue.php?concerts=<?=$i?>&place=+2" class="button small">+2 places</a>
+											<a href="vue-concert.php?concert=<?=$i?>" class="button primary small">Réserver</a>
+											<?php else :?>
+											<a href="" class="button small disabled">Victime de son succés</a>
 											<?php endif ;?>
 										</td>
 										<?php else :?>

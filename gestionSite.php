@@ -1,6 +1,6 @@
 <?php
-include "connexion_postgres.php";
-$connexion = connexion();
+include "utils.php";
+$connexion = dbConnexion();
 
 #Session
 session_start();
@@ -50,6 +50,19 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 			$sql ='select * from administrateurs A
 					right join utilisateurs U on A.id_utilisateur = U.id_utilisateur';
 			break;
+		case 5:
+			$sql ='select distinct C.id_commande, C.date_commande,tot,U.*
+					from ligne_commande lc
+						join concerts co on co.id_concert = lc.id_concerts
+						join commande C on C.id_commande = lc.id_commande
+						join utilisateurs U on C.id_utilisateur = U.id_utilisateur
+						join (select ligne_commande.id_commande, sum((nbplace*prix))as tot from ligne_commande 
+							join concerts on concerts.id_concert = ligne_commande.id_concerts
+							group by id_commande) as pr on pr.id_commande = lc.id_commande
+					order by C.id_commande desc';
+			//TODO gestion d'un modification de commande
+			$type = 1;
+			break;
 		default:
 			$category='';
 	}
@@ -67,11 +80,9 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 
 ?>
 <?php
-#echo '<pre>';
 #print_r($_GET);
 #print_r($_SESSION);
-#print_r($info);
-#echo '</pre>';
+preTab($info);
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -127,6 +138,14 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 												<th>Nom</th>
 												<th>Prenom</th>
 												<th>Mail</th>
+												<?php break ;
+												case 5: ?>
+												<th>N°Commande</th>
+												<th>Date</th>
+												<th>Nom du Client</th>
+												<th>Prénom</th>
+												<th>Mail</th>
+												<th>Total de la commande</th>
 											<?php endswitch ;?>
 											</tr>
 										</thead>
@@ -137,27 +156,35 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 												<tr>
 												<?php switch($category):
 													case 1: ?>
-													<td><?=$tab['lieu']?></td>
-													<td><?=$tab['date_evenement']?></td>
-													<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
-													<td><?=$tab['prix']?></td>
+														<td><?=$tab['lieu']?></td>
+														<td><?=$tab['date_evenement']?></td>
+														<td><?=$tab['place_libre'].'/'.$tab['place']?></td>
+														<td><?=$tab['prix']?></td>
 													<?php break ;
 													case 2: ?>
-													<td><?=$tab['nom']?></td>
-													<td><?=$tab['genre']?></td>
-													<td><?=$tab['image']?></td>
+														<td><?=$tab['nom']?></td>
+														<td><?=$tab['genre']?></td>
+														<td><?=$tab['image']?></td>
 													<?php break ;
 													case 3: ?>
-													<td><?=$tab['lieu']?></td>
-													<td><?=$tab['date_evenement']?></td>
-													<td><?=$tab['nom']?></td>
+														<td><?=$tab['lieu']?></td>
+														<td><?=$tab['date_evenement']?></td>
+														<td><?=$tab['nom']?></td>
 													<?php break ;
 													case 4: ?>
-													<?php if(!empty($tab['id_admin'])) :?>
-														<td><?=$tab['nom']?></td>
-														<td><?=$tab['prenom']?></td>
-														<td><?=$tab['mail']?></td>
-													<?php endif ;?>
+														<?php if(!empty($tab['id_admin'])) :?>
+															<td><?=$tab['nom']?></td>
+															<td><?=$tab['prenom']?></td>
+															<td><?=$tab['mail']?></td>
+														<?php endif ;?>
+													<?php break ;
+													case 5: ?>
+														<th><?=$tab['id_commande']?></th>
+														<th><?=dateFr($tab['date_commande'])?></th>
+														<th><?=$tab['nom']?></th>
+														<th><?=$tab['prenom']?></th>
+														<th><?=$tab['mail']?></th>
+														<th><?=$tab['tot']?> €</th>
 												<?php endswitch ;?>
 												</tr>
 											<?php endforeach;?>
@@ -367,7 +394,9 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 									<option value="1">Gestion des concerts</option>
 									<option value="2">Gestion des artistes</option>
 									<option value="3">Gestion de la participations des artistes aux concerts</option>
+									<option value="5">Gestion des commandes</option>
 									<option value="4">Gestion des administrateurs</option>
+									
 								</select>
 								<select name="type">
 									<option value="">- Je veux ... -</option>
