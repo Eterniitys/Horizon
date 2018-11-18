@@ -1,4 +1,4 @@
-Johan Guerrero -- ✓ ☒ ├ │ └ ─ ┐ ┣ ┗ ┞ ┓ ┃ ━
+Johan Guerrero
 
 
 
@@ -18,19 +18,19 @@ Backlog
  ┃	│
  ┃	├ je souhaite créer un compte									✓
  ┃	│
- ┃	├ je souhaite voir mon panier d’achats							☒
+ ┃	├ je souhaite voir mon panier d’achats							✓
  ┃	│
- ┃	└ je souhaite modifier mon panier d’achats						☒
+ ┃	└ je souhaite modifier mon panier d’achats						✓
  ┃
  ┣━Utilisateur-inscrit
  ┃	│
- ┃	└ je souhaite reservé un produit								☒
+ ┃	└ je souhaite reservé un produit								✓
  ┃
  ┗━Administrateur
  	│
  	├ je souhaite pouvoir ajouter, supprimer les produits					✓
  	│	
- 	├ je souhaite voir toutes les commandes							☒
+ 	├ je souhaite voir toutes les commandes							✓
  	│
- 	└ je souhaite avoir des informations sur les utilisateurs ayant commandé	☒
+ 	└ je souhaite avoir des informations sur les utilisateurs ayant commandé	✓
  	

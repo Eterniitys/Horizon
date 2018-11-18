@@ -1,17 +1,23 @@
-Johan Guerrero
+			    Johan Guerrero
 
 #############################################################
-#								#
-#			   !!! IMPORTANT !!! 			#
-#								#
+										
+			   !!! IMPORTANT !!! 				
+										
 #############################################################
-#								#
-#	Un compte Admin est harcodé dans la base de donnée	#
-#	mail:		admin@admin.fr				#
-#	mdp:		admin					#
-#								#
+										
+	Un compte Admin est prévu dans la base de donnée	
+	mail:		admin@admin.fr					
+	mdp:		admin							
+										
 #############################################################
 
+Adresse Web du site + GitHub
+	┃
+	┣━http://eterniitys.pewpew.space/gestionSite.php
+	┃
+	┗━https://github.com/Eterniitys/Horizon
+	
 template
 	┃
 	┗━https://html5up.net/
@@ -52,10 +58,48 @@ Base de donnée d'origine: postgreSQL
 		┃	├> mail
 		┃	└> mdp
 		┃
-		┗table administrateurs
-			├> id_admin -> pk
-			└> id_utilisateur -> fk
+		┣table administrateurs
+		┃	├> id_admin -> pk
+		┃	└> id_utilisateur -> fk		
+		┃	
+		┣table commande
+		┃	├> id_commande -> pk
+		┃	├> id_utilisateur
+		┃	└> date_commande
+		┃
+		┗table ligne_commande
+			├> id_ligne -> pk
+			├> id_commande
+			├> id_concert
+			└> nbplace
+		
+- - - - - - - - - - - - - - - - - - sprint_3 - - -
 
+fichiers ajoutés:
+	├> # Fichier ajoutant des fonctions utile
+	│	└> utils.php
+	├> # Ajout de la classe concert, n'est pas implémentée de maniére systématique sur les pages réalisées précédement (TODO)
+	│	├> app/
+	│	└> concert.php
+	└> # Fichier lié à la commande/panier
+		├> commander.php
+		└> panier.php
+
+fichiers modifiés:
+	├> sessionFin.php
+	├> gestionSite.php
+	├> sql/table.sql
+	└> lisez-moi-jguerrer.txt
+		└>README.txt
+
+fichiers supprimés:
+	├> # Ajout des fonctions du Panier
+	│	├> vue-concert.php
+	│	├> vue-artiste.php
+	│	└> vue-concert.php 
+	├> connexion_mysql.php
+	└> init.php
+	
 - - - - - - - - - - - - - - - - - - sprint_2 - - -
 
 fichiers ajoutés:
@@ -81,8 +125,8 @@ fichiers modifiés:
 - - - - - - - - - - - - - - - - - - sprint_1 - - -
 
 fichiers ajoutés:
-	├> connexion_mysql
-	├> connexion_postgres
+	├> connexion_mysql.php
+	├> connexion_postgres.php
 	├> header.php
 	├> images/*
 	├> images/artistes/*

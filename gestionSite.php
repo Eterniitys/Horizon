@@ -82,7 +82,7 @@ if(isset($_POST['category']) && isset($_POST['type']) || isset($_GET['category']
 <?php
 #print_r($_GET);
 #print_r($_SESSION);
-preTab($info);
+#preTab($info);
 ?>
 <!DOCTYPE HTML>
 <!--
