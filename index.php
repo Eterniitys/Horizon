@@ -5,8 +5,8 @@ $connexion = connexion();
 #Session
 session_start();
 
-if (!isset($_SESSION[id_utilisateur])){
-	$_SESSION[id_utilisateur]=-1;
+if (!isset($_SESSION["id_utilisateur"])){
+	$_SESSION["id_utilisateur"]=-1;
 }
 
 
@@ -61,12 +61,12 @@ $info=$info->fetchAll(PDO::FETCH_ASSOC);
 								<?php foreach ($info as $i => $tab):?>
 								<article class="style<?=rand(1,6)?>">
 									<span class="image">
-										<img src="<?='images/artistes/'.$tab[image]?>" alt="" />
+										<img src="<?='images/artistes/'.$tab["image"]?>" alt="" />
 									</span>
-									<a href="vue-artiste.php?artiste=<?=$tab[id_artiste]?>">
-										<h2><?=$tab[nom]?></h2>
+									<a href="vue-artiste.php?artiste=<?=$tab["id_artiste"]?>">
+										<h2><?=$tab["nom"]?></h2>
 										<div class="content">
-											<p><?=$tab[nbconcert]?> concerts disponible</p>
+											<p><?=$tab["nbconcert"]?> concerts disponible</p>
 										</div>
 									</a>
 								</article>
