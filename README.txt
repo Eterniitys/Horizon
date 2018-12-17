@@ -72,6 +72,19 @@ Base de donnée d'origine: postgreSQL
 			├> id_commande
 			├> id_concert
 			└> nbplace
+			
+- - - - - - - - - - - - - - - - - - sprint_4 - - -
+
+fichiers ajoutés:
+	└> vue_api.php
+		# il est nécéssaire de rentré la page a la main dans l'omnibox
+		# ne fonctionne que si vous étes connecté en administrateur
+
+fichiers modifiés:
+	└> None
+
+fichiers supprimés:
+	└> None
 		
 - - - - - - - - - - - - - - - - - - sprint_3 - - -
 

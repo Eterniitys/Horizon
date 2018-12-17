@@ -4,7 +4,7 @@
 define("SERVEUR","localhost");
 define("USER","postgres");
 define("MDP","");
-define("BD","horizon_TEA");
+define("BD","horizon_tea");
 
 function connexion($hote=SERVEUR,$username=USER,$mdp=MDP,$bd=BD){
 	try{
